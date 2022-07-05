@@ -1,0 +1,13 @@
+<!-- 
+    footer : Estilo personalizado para mantener el footer en la parte inferior del navegador.
+    Este estilo aplicará un fondo negro, redondeamos las esquinas superiores y centramos el texto.
+ -->
+<footer class="footer bg-dark rounded-top text-center">
+    <!-- clase container propia de bootstrap, padding en el eje "y" de 2 -->
+    <div class="container py-2">
+        <!-- Texto blanco,  margin en el eje "y" de 2-->
+        <p class="text-white my-2">
+            &copy; {{ autor.nombre + ' '+ autor.apellido}}
+        </p>
+    </div>
+</footer>
