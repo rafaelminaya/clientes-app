@@ -8,8 +8,15 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <!-- routerLinkActive="active" : Añade el "class"  "active" a la etiqueta "<li>" al dar click en este elemento-->
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/directivas">Directivas</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/clientes">Clientes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
