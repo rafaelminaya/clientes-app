@@ -1,0 +1,50 @@
+<div class="card bg-dark text-white">
+    <!-- <div class="card-header">{{titulo}}</div> -->
+    <div class="card-header">{{ !cliente.id ? 'Crear Cliente': 'Editar Cliente'}}</div>
+    <div class="card-body">
+        <!-- (ngSubmit) : Para indicar el nombre del método del componente que se invocará cuando se realice el "submit" -->
+        <!-- <form (ngSubmit)="create()"> -->
+        <form>
+
+            <!-- [(ngModel)] :
+                 -Directiva que con los datos del formulario, poblará al objeto de la clase "Cliente" y a sus atributos.  
+                 - Esta directiva mapeará el formulario a un objeto del componente asignado a esta vista.
+                 -A esto se le conoce como "binging" bidireccional, ya que si poblamos de data al objeto "cliente" en el componente, 
+                 por ejemplo con un servicio rest, la información se mostrará acá en el formulario.
+            -->
+            <div class="form-group row">
+                <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre">
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="email" class="col-form-label col-sm-2">Email</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="cliente.email" name="email">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <!-- elseBlock: identificador del "ng-template" renderizado abajo en caso no se cumpla la condición, es decir, que exista o haya valor para "cliente.id" -->
+                    <button class="btn btn-primary" role="button" (click)="create()" *ngIf="!cliente.id else elseBlock">Crear</button>
+
+                    <ng-template #elseBlock>
+                        <button class="btn btn-primary" role="button" (click)="update()">Editar</button>
+                    </ng-template>
+                </div>
+            </div>
+
+        </form>
+        
+    </div>
+</div>

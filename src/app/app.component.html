@@ -1,7 +1,7 @@
 <!-- Navbar - Primer navBar de Bootstrap  - Barra de navegación-->
 <app-header></app-header>
-
-<div class="container">
+<!-- pb-5 : Equivalente a "padding-bootom" . pb-5 es lo máximo, lo mínimo es  pb-1 -->
+<main class="container my-3 pb-5">
   <h1>{{ title }}</h1>
 
   <!-- <app-clientes></app-clientes> -->
@@ -9,9 +9,14 @@
   <!-- <app-directiva></app-directiva> -->
   
   <!-- Directiva de angular para indicar dónde se va a renderizar el contenido de cada ruta registrada en el módulo, en este caso en el módulo principal "AppModule"-->
-  <router-outlet></router-outlet>
+  <!-- <main>
+    <router-outlet></router-outlet>
+  </main> -->
 
-</div>
+  <router-outlet></router-outlet>
+  
+
+</main>
 <app-footer></app-footer>
 
 

@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+/*defginimos una posición relativa para el documento completo de la página para que el diseño del footer no se rompa*/
+html{
+    position: relative;
+    min-height: 100%;
+}
+/*añadimos un "margin-bottom" que tenga la misma altura que el estilo ".footer" */
+body {
+    margin-bottom: 60px;
+}

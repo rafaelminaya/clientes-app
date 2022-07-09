@@ -7,6 +7,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { DirectivaComponent } from './directiva/directiva.component';
 import { ClientesComponent } from './clientes/clientes.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormComponent } from './clientes/form.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -14,12 +18,17 @@ import { ClientesComponent } from './clientes/clientes.component';
     HeaderComponent,
     FooterComponent,
     DirectivaComponent,
-    ClientesComponent,    
+    ClientesComponent,
+    FormComponent,    
 
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    //Importamos el módulo de peticiociones http de angular  para poder utilizarlo en la clase "ClienteService"
+    HttpClientModule,
+    //Importamos el módulo de formularios de angularpara el uso de formularios y poder usarlo en el "FormComponent"
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
