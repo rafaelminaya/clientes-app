@@ -24,7 +24,8 @@ export class ClienteService {
   - of : método de construcción para crear/convertir/parsear a un tipo Observable.
   - Observable está basado en el "patrón de diseño observador", es decir, tenemos un "sujeto" que es "observable", 
    este caso el "Cliente" y el "observador" que está atento escuchando un posible cambio en el "sujeto".
-  - Estos observadores se "suscriben" al sujeto que sería el "observable" y cuando cambia su estado se notifican a los observadores y se lanza algún tipo de proceso/evento. */
+  - Estos observadores se "suscriben" al sujeto que sería el "observable" y cuando cambia su estado se notifican a los observadores y se lanza algún tipo de proceso/evento.
+  */
   getClientes() : Observable<Cliente[]> {
 
     /* - this.http.get<Cliente[]> : Ya tenemos a "this.http.get" como el tipo "Observable" a retornar, 
@@ -93,6 +94,7 @@ export class ClienteService {
     );
   }
 
+
   delete(id: number): Observable<Cliente>{
     return this.http.delete<Cliente>(`${this.urlEnPoint}/${id} `)
     .pipe(
@@ -105,5 +107,6 @@ export class ClienteService {
 
     );
   }
+
   
 }

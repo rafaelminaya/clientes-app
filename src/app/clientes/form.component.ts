@@ -55,8 +55,7 @@ export class FormComponent implements OnInit {
       //Redireccionamos a la ruta "http://localhost:4200/clientes"
       (cliente) => {
         // Usamos la librería "SweetAlert2" instalada por medio ded npm
-         Swal.fire('Nuevo cliente', `Cliente ${cliente.nombre} creado con éxito!`, 'success');
-         
+         Swal.fire('Nuevo cliente', `Cliente ${cliente.nombre} creado con éxito!`, 'success')
         /*   
         Swal.fire({
           title: 'Nuevo cliente',
