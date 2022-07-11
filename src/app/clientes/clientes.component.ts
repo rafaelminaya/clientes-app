@@ -48,7 +48,9 @@ export class ClientesComponent implements OnInit {
         //Hacemos le consumo de la API de eliminar
         this.clienteService.delete(cliente.id).subscribe(
           (response) => {
-            this.clientes = this.clientes.filter(cli => cli !== cliente)
+            //filter() : Usamos esta función de JS para iterar el arreglo, solo considerando los registros cuyo objeto cliente sea diferente del recibido a eliminar
+            this.clientes = this.clientes.filter(cli => cli !== cliente);
+
             swalWithBootstrapButtons.fire(
               'Cliente eliminado!',
               `Cliente ${cliente.nombre}  ${cliente.apellido} eliminado con éxito!`,

@@ -51,18 +51,21 @@ export class FormComponent implements OnInit {
 
   create(): void{
     this.clienteService.create(this.cliente).subscribe(
+      
       //Redireccionamos a la ruta "http://localhost:4200/clientes"
       (cliente) => {
-
         // Usamos la librería "SweetAlert2" instalada por medio ded npm
-        // Swal.fire('Nuevo cliente', `Cliente ${response.nombre} creado con éxito!`, 'success')        
+         Swal.fire('Nuevo cliente', `Cliente ${cliente.nombre} creado con éxito!`, 'success');
+         
+        /*   
         Swal.fire({
           title: 'Nuevo cliente',
           text: `Cliente ${cliente.nombre} creado con éxito!`,
           icon: 'success',
           confirmButtonText: 'De acuerdo',        
-          timer: 3000          
+         //timer: 3000          
         })
+        */
 
         //Redireccionamos a la ruta del listado de clientes
         this.router.navigate(['/clientes']);
@@ -73,11 +76,11 @@ export class FormComponent implements OnInit {
 
   update(): void{
     this.clienteService.update(this.cliente).subscribe(
-      (cliente) => {
+      (response) => {
 
         Swal.fire({
           title: 'Cliente actualizado',
-          text: `Cliente ${cliente.nombre} actualizado con éxito!`,
+          text: `${response.mensaje} : ${response.cliente.nombre}`,
           icon: 'success',
           confirmButtonText: 'De acuerdo',        
           timer: 3000          
