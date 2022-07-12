@@ -52,8 +52,16 @@ export class ClienteService {
       //map : Transformamos la respuesta, primero indicar que es de tipo "any" (ya que tendremos 2 objetos en la respuesta) y parsemos uno de ellos a tipo "Cliente"
       map( (response: any) => response.cliente as Cliente),
       catchError(err => {
+
+        //obtener y trabajar las validaciones/errores del backend
+        if(err.status == 400){
+          return throwError(() => err);
+        }
+
         console.log(err.error.mensaje);
+
         Swal.fire(err.error.mensaje, err.error.error, 'error');
+
         return throwError(() => err);
 
       })
@@ -65,8 +73,15 @@ export class ClienteService {
     return this.http.put<any>(`${this.urlEnPoint}/${cliente.id} `, cliente, {headers: this.httpHeaders})
     .pipe(
       catchError(err => {
+
+        if(err.status == 400){
+          return throwError(() => err);
+        }
+
         console.log(err.error.mensaje);
+
         Swal.fire(err.error.mensaje, err.error.error, 'error');
+
         return throwError(() => err);
       })
     );

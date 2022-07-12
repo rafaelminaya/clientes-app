@@ -13,6 +13,10 @@ export class FormComponent implements OnInit {
 
   titulo: string = "Crear cliente";
   cliente: Cliente = new Cliente();
+  errores: string[] = [];
+  //Atributo que contiene los diferentes mensajes de error de validaciones del backend
+
+
   /*
   private clienteService: ClienteService : Inyección de dependencias del servicio para las peticiones http
   private router: Router : Inyectamos la dependencia del Router para poder hacer redirecciones.
@@ -52,7 +56,8 @@ export class FormComponent implements OnInit {
   create(): void{
     this.clienteService.create(this.cliente).subscribe(
       
-      //Redireccionamos a la ruta "http://localhost:4200/clientes"
+      
+      //Primer parámetro que contiene los mensajes de éxito.
       (cliente) => {
         // Usamos la librería "SweetAlert2" instalada por medio ded npm
          Swal.fire('Nuevo cliente', `Cliente ${cliente.nombre} creado con éxito!`, 'success')
@@ -66,10 +71,17 @@ export class FormComponent implements OnInit {
         })
         */
 
-        //Redireccionamos a la ruta del listado de clientes
+        //Redireccionamos a la ruta "http://localhost:4200/clientes"
         this.router.navigate(['/clientes']);
+      },
+      //Segundo parámetro que contiene los mensajes de error
+      //Asignamos los valores obtenidos del error a la variable local "this.errores", parseado en arreglo de strings "string[]"
+      (err) => {        
+        this.errores = err.error.errors as string[];
+        console.log('Codigo de error desde el backend: ' + err.status);
+        console.log('err.error.errors: ' + err.error.errors);
       }
-
+      
     );
   }
 
@@ -86,6 +98,13 @@ export class FormComponent implements OnInit {
         })
 
         this.router.navigate(['/clientes'])
+      },
+      //Segundo parámetro que contiene los mensajes de error
+      //Asignamos los valores obtenidos del error a la variable local "this.errores", parseado en arreglo de strings "string[]"
+      (err) => {
+        this.errores = err.error.errors as string[];
+        console.log('Codigo de error desde el backend: ' + err.status);
+        console.log('err.error.errors: ' + err.error.errors);
       }
 
     );

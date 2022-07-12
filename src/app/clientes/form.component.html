@@ -1,3 +1,9 @@
+<!-- lista que contiene los diferentes errores -->
+<ul *ngIf="errores?.length > 0" class="alert alert-danger">
+    <li *ngFor="let err of errores">
+        {{err}}
+    </li>
+</ul>
 <div class="card bg-dark text-white">
     <!-- <div class="card-header">{{titulo}}</div> -->
     <div class="card-header">{{ !cliente.id ? 'Crear Cliente': 'Editar Cliente'}}</div>
@@ -22,13 +28,14 @@
                   - txt_nombre.dirty : evento lanzado a medida que uno va escribiendo
                   - txt_nombre.touched : evento lanzado cuando salimos del foco de este elemento input.
                   - txt_nombre.errors.required : validación de requiered en el idenficador #txt_nombre, 
-                    funciona en apoyo con el atributo "required" de la etiqueta "<input>"
+                    funciona en apoyo con el atributo "required" de la etiqueta "<input>". Este "errors" es propio de Angular.
 
             -->
             <div class="form-group row">
                 <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre" required minlength="4" #txt_nombre="ngModel">
+                    <!-- <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre" required minlength="4" #txt_nombre="ngModel"> -->
+                    <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre" #txt_nombre="ngModel">
                     
                     <div class="alert alert-danger" *ngIf="txt_nombre.invalid && (txt_nombre.dirty || txt_nombre.touched)">
                         <div *ngIf="txt_nombre.errors.required">
@@ -45,7 +52,8 @@
             <div class="form-group row">
                 <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" required minlength="4" #txt_apellido="ngModel">
+                    <!-- <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" required minlength="4" #txt_apellido="ngModel"> -->
+                    <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" #txt_apellido="ngModel">
 
                     <div class="alert alert-danger" *ngIf="txt_apellido.invalid && (txt_apellido.dirty || txt_apellido.touched)">
                         <div *ngIf="txt_apellido.errors.required">
@@ -62,7 +70,8 @@
             <div class="form-group row">
                 <label for="email" class="col-form-label col-sm-2">Email</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" [(ngModel)]="cliente.email" name="email" required email #txt_email="ngModel">
+                    <!-- <input type="text" class="form-control" [(ngModel)]="cliente.email" name="email" required email #txt_email="ngModel"> -->
+                    <input type="text" class="form-control" [(ngModel)]="cliente.email" name="email" #txt_email="ngModel">
 
                     <div class="alert alert-danger" *ngIf="txt_email.invalid && (txt_email.dirty || txt_email.touched)">
                         <div *ngIf="txt_email.errors.required">
