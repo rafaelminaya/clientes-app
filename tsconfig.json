@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true, 
+    "strict": false, // "true" por defecto, Lo cambiamos a true para que no nos moleste las validaciones de las vistas
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -25,8 +25,8 @@
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
+    "strictInjectionParameters": false,//"true" por defecto, Lo cambiamos a true para que no nos moleste las validaciones de las vistas
+    "strictInputAccessModifiers": false,//"true" por defecto, Lo cambiamos a true para que no nos moleste las validaciones de las vistas
     "strictTemplates": false // "true" por defecto, Lo cambiamos a true para que no nos moleste las validaciones de las vistas
   }
 }

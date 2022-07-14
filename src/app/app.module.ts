@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,7 +30,7 @@ import { FormsModule } from '@angular/forms';
     //Importamos el módulo de formularios de angularpara el uso de formularios y poder usarlo en el "FormComponent"
     FormsModule
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

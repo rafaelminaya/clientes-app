@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-clientes',
@@ -15,9 +16,13 @@ export class ClientesComponent implements OnInit {
   constructor(private  clienteService: ClienteService) { }
 
   ngOnInit(): void {
-
-    this.clienteService.getClientes().subscribe(
-      (res) => this.clientes = res
+    //tap() : Nos permite hacer una tarea. En este caso trabajar dentro de esta función, el asignar a "this.clientes" el "response" obtenida de la suscripción
+    this.clienteService.getClientes()
+    .pipe(
+      tap(clientes => this.clientes = clientes)
+      )
+    .subscribe(
+      //(response) => this.clientes = response
     );
     
   }
@@ -27,6 +32,7 @@ export class ClientesComponent implements OnInit {
    */
   delete(cliente: Cliente): void{
 
+    //Aplicacmos una venta de alerta de la plantilla de la documentación de "sweetalert2"
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',

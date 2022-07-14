@@ -3,6 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { ClientesComponent } from './clientes/clientes.component';
 import { DirectivaComponent } from './directiva/directiva.component';
 import { FormComponent } from './clientes/form.component';
+import { registerLocaleData } from '@angular/common';
+import localeES from '@angular/common/locales/es';
+
+//Configuramos globalmente el i18n de forma global para toda la aplicación.
+registerLocaleData(localeES, 'es');
 
 const routes: Routes = [
   {

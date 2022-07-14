@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { Cliente } from './cliente';
 import { CLIENTES } from './clientes.json';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+import { DatePipe, formatDate, registerLocaleData } from '@angular/common';
+import localeES from '@angular/common/locales/es';   
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +38,73 @@ export class ClienteService {
     /* - Otra alternativa sería usando el operador "map" para convertir el tipo "json" a "Cliente[]"
        - pipe :  permite agregar más operadores
        - of: Operador que puede convertir un listado a Observable
-       - map : operador "rxjs" que permite transformar la respuesta del servidor. En este caso, nuestro  todo el "response" lo parsea a tipo "cliente[]" */
+       - map : operador "rxjs" que permite transformar la respuesta del servidor. En este caso, nuestro  todo el "response" lo parsea a tipo "cliente[]" 
+       - tap : Operador que permite realizar algún tipo de tarea sin manipular la información a retornar, ya que es un tipo "void" que no retorna un valor. */
     return this.http.get(this.urlEnPoint)
     .pipe(
-      map( (response) => response as Cliente[])
-    );
+      
+      tap(response => {
+
+        let clientes = response as Cliente[];
+
+        console.log('ClienteService: tap1');
+        
+        //Iteramos e imprimimos la respuesta hasta ahora obtenida
+        clientes.forEach( cliente => {
+          console.log(cliente.nombre);
+        });
+      }),
+      //map( (response) => response as Cliente[])
+      map( response=> {
+
+        /*Esta función, importada de angular permite que el constructor "DatePipe('es')" más abajo funcione en español, 
+         de lo contrario seía solo en inlgés con "DatePipe('en_US');"
+         Enviamos esta función con al "app-routing.modules.ts" para su uso global*/
+        //registerLocaleData(localeES, 'es');
+
+        let clientes = response as Cliente[];
+
+        //retornamos el array de clientes
+        return clientes.map(cliente => {
+
+          //Iteramos y retornamos el cliente con su nombre en mayúsculas.
+          cliente.nombre = cliente.nombre.toUpperCase();
+          
+          //FORMATO PARA FECHAS DESDE EL SERVICE
+          //DatePipe('es') : Función importada de angular para que lo fecha salga en español y no en inglés que es por defecto.
+          //let datePipe = new DatePipe('es');
+
+          /* 1° Opción para formato de fecha
+             - formatDate() : Función para formatear la fecha desde un observable
+             - 'dd-MM-yyyy' : Formato de fecha, también puede ser en dígitos, palabras, etc
+             - 'en-US' : Este sería el "Locate estándar". */
+          //cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yyyy', 'en-US');  
+          
+          // 2° Opción para formato de fecha, necesita modificar el archivo "tsconfig.json" para funcionar.                    
+          // cliente.createAt = datePipe.transform(cliente.createAt, 'dd/MM/yyyy');
+          
+          /* EEEE : Nombre del día de la semana conpleto, EEE: Nombre del día de la semana abreviado
+             MMMM : Nombre del mes conpleto, MMM: Nombre del mes abreviado
+             Se podría separar el formato por comas, slash, espacios, guiamos, etc:  EEEE dd/MMMM/yyyy */
+
+          // cliente.createAt = datePipe.transform(cliente.createAt, 'fullDate');
+          //cliente.createAt = datePipe.transform(cliente.createAt, 'EEEE dd, MMMM yyyy');
+          
+
+          return cliente;
+        });
+      }
+    ),    
+      tap(response => {
+
+        console.log('ClienteService: tap2');
+        
+        //Iteramos e imprimimos la respuesta hasta ahora obtenida
+        response.forEach( cliente => {          
+          console.log(cliente.nombre);
+        });
+      })
+    )
   }
   
   //1° Opción de manipular el response del backend, usando el operador "map()"
