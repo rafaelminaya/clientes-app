@@ -3,72 +3,92 @@ import Swal from 'sweetalert2';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import { tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css']
+  styleUrls: ['./clientes.component.css'],
 })
 export class ClientesComponent implements OnInit {
   clientes: Cliente[] = [];
-  
-  // Inyección de dependencias.
-  constructor(private  clienteService: ClienteService) { }
+  paginador: any;
 
+  /* - Inyección de dependencias.
+   - private clienteService: ClienteService : Inyección de dependencias del servicio para las peticiones http
+   - ActivatedRoute: Permtie obtener datos de la url, es decir observa el cambio en el parámetro.*/
+  constructor(
+    private clienteService: ClienteService,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
+  //ngOnInit : Método parte del ciclo de vida del componente que se invocará una sola vez, que es cuando se inicia.
   ngOnInit(): void {
-    //tap() : Nos permite hacer una tarea. En este caso trabajar dentro de esta función, el asignar a "this.clientes" el "response" obtenida de la suscripción
-    this.clienteService.getClientes()
-    .pipe(
-      tap(clientes => this.clientes = clientes)
-      )
-    .subscribe(
-      //(response) => this.clientes = response
-    );
-    
-  }
-  /*
-  Método para eliminar un cliente
-  cliente : Es objeto es enviado en el evento del botón.
-   */
-  delete(cliente: Cliente): void{
+    /* - this.activatedRoute.paramMap : Observable que permite recuperar un parámetro de la ruta que cambie constantemente.*/
+    this.activatedRoute.paramMap.subscribe((params) => {
+      //get('page') : Es el nombre del parámetro que obtenemos de la URL.
+      let page: number = +params.get('page');
 
-    //Aplicacmos una venta de alerta de la plantilla de la documentación de "sweetalert2"
+      //Validación para la primera página, para cuando no haya este parámetro se le asgine el valor de cero "0".
+      if (!page) {
+        page = 0;
+      }
+      //tap() : Nos permite hacer una tarea. En este caso trabajar dentro de esta función, el asignar a "this.clientes" el "response" obtenida de la suscripción
+      this.clienteService
+        .getClientesPagination(page)
+        .pipe(
+          tap((response) => {
+            console.log('ClientesComponent: tap3');
+            //this.clientes = clientes
+            (response.content as Cliente[]).forEach((cliente) => {
+              console.log(cliente.nombre);
+            });
+          })
+        )
+        .subscribe((response) => {
+          this.clientes = response.content as Cliente[];
+          this.paginador = response;
+        });
+    });
+  }
+  /* - Método para eliminar un cliente
+     -cliente : Es objeto es enviado en el evento del botón. */
+  delete(cliente: Cliente): void {
+    //Aplicamos una venta de alerta de la plantilla de la documentación de "sweetalert2"
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
+        cancelButton: 'btn btn-danger',
       },
-      buttonsStyling: false
-    })
-    
-    swalWithBootstrapButtons.fire({
-      title: 'Estás seguro?',
-      text: `¿Seguro que desea eliminar al cliente ${cliente.nombre } ${cliente.apellido}`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, eliminar!',
-      cancelButtonText: 'No, cancelar!',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        //Hacemos le consumo de la API de eliminar
-        this.clienteService.delete(cliente.id).subscribe(
-          (response) => {
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Estás seguro?',
+        text: `¿Seguro que desea eliminar al cliente ${cliente.nombre} ${cliente.apellido}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar!',
+        cancelButtonText: 'No, cancelar!',
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          //Hacemos le consumo de la API de eliminar
+          this.clienteService.delete(cliente.id).subscribe((response) => {
             //filter() : Usamos esta función de JS para iterar el arreglo, solo considerando los registros cuyo objeto cliente sea diferente del recibido a eliminar
-            this.clientes = this.clientes.filter(cli => cli !== cliente);
+            this.clientes = this.clientes.filter((cli) => cli !== cliente);
 
             swalWithBootstrapButtons.fire(
               'Cliente eliminado!',
               `Cliente ${cliente.nombre}  ${cliente.apellido} eliminado con éxito!`,
               'success'
-            )
-          }
-        );
-
-        
-      } 
-      //Comentaremos estas líneas que muestran un mensaje en caso elijamos cerrar ventana flotante
-      /*
+            );
+          });
+        }
+        //Comentaremos estas líneas que muestran un mensaje en caso elijamos cerrar ventana flotante
+        /*
       else if (
         
         result.dismiss === Swal.DismissReason.cancel
@@ -80,7 +100,6 @@ export class ClientesComponent implements OnInit {
         )
       }
       */
-    })
+      });
   }
-
 }

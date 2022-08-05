@@ -10,7 +10,7 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './clientes/form.component';
 import { FormsModule } from '@angular/forms';
-
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -19,18 +19,18 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     DirectivaComponent,
     ClientesComponent,
-    FormComponent,    
-
+    FormComponent,
+    PaginatorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     //Importamos el módulo de peticiociones http de angular  para poder utilizarlo en la clase "ClienteService"
     HttpClientModule,
-    //Importamos el módulo de formularios de angularpara el uso de formularios y poder usarlo en el "FormComponent"
-    FormsModule
+    //Importamos el módulo de formularios de angular para el uso de formularios y poder usarlo en el "FormComponent"
+    FormsModule,
   ],
-  providers: [{provide: LOCALE_ID, useValue: 'es' }],
-  bootstrap: [AppComponent]
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

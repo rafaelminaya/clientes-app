@@ -1,0 +1,38 @@
+<!-- pagination: Clase propia de Bootstrap -->
+<ul *ngIf="paginas?.length > 0" class="pagination">
+
+    <!-- Botón hacia la primera página -->
+    <li class="page-item" [ngClass]="paginador.first ? 'disabled' : '' ">
+        <a class="page-link" [routerLink]="['/clientes/page/', 0]">Primera</a>
+    </li>
+
+    <!-- Botón de página siguiente -->
+    <li class="page-item" *ngIf="paginador.number > 0">
+        <a class="page-link" [routerLink]="['/clientes/page/', paginador.number - 1]">&laquo;</a>
+    </li>
+
+    <!-- [ngClass] : Directiva que permite validar una expresión y según esto añadir un estilo
+        En este caso añadimos la clase "disabled" o ninguna en caso aso coincidan o no el paginador actual con el link a actual
+    -->
+    <li class="page-item" *ngFor="let pagina of paginas" [ngClass]="pagina-1 == paginador.number ? 'active' : '' ">
+
+        <!-- Renderizamos un  "<span>" o un "<a>" en caso coincidan o no el paginador actual con el link a actual-->
+        <span class="page-link" *ngIf="pagina-1 == paginador.number"> {{pagina}} </span>
+
+        <!-- Implementamos los links de cada página -->
+        <a class="page-link" *ngIf="pagina-1 != paginador.number"
+            [routerLink]="['/clientes/page/', pagina - 1]">{{pagina}}</a>
+    </li>
+
+    <!-- Botón de la siguiente página siguiente -->
+    <li class="page-item" *ngIf="paginador.number < paginador.totalPages-1">
+        <a class="page-link" [routerLink]="['/clientes/page/', paginador.number + 1]">&raquo;</a>
+    </li>
+
+    <!-- Botón hacia la última página -->
+    <li class="page-item" [ngClass]="paginador.last ? 'disabled' : '' ">
+        <a class="page-link" [routerLink]="['/clientes/page/', paginador.totalPages-1 ]">Última</a>
+    </li>
+
+
+</ul>

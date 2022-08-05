@@ -1,47 +1,58 @@
 <!-- Buscamos un "card", quitamos el "style" del primer div y añadimos el "class" en la etiquta "table" añadiendo lo escrito abajo-->
 <div class="card border-primary mb-3">
-    <div class="card-header">Clientes</div>
-    <div class="card-body text-primary">
-      <h5 class="card-title">Listado de clientes</h5>
+  <div class="card-header">Clientes</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de clientes</h5>
 
-      <!-- [routerLink] : Directiva view/helper que permiten crear links/enlaces internas de nuestro proyecto -->
-      <div class="my-2 text-left">
-        <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']">
-          Crear Cliente
-        </button>
-      </div>
-
-      <div *ngIf="clientes.length == 0" class="alert alert-info">
-        No hay registros en la base de datos.
-      </div>
-
-      <table *ngIf="clientes.length > 0" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Fecha</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let cliente of clientes">
-                <td> {{cliente.id}} </td>
-                <td> {{cliente.nombre}} </td>
-                <td> {{cliente.apellido | uppercase}} </td>                
-                <td> {{cliente.email}} </td>            
-                <td> {{cliente.createAt | date: "EEEE dd, MMMM yyyy"}} </td>
-                <td> 
-                  <button type="button" name="button" [routerLink]="['/clientes/form', cliente.id]" class="btn btn-primary">Editar</button>
-                </td>
-                <td> 
-                  <button type="button" name="button" (click)="delete(cliente)" class="btn btn-danger">Eliminar</button>
-                </td>
-            </tr>
-        </tbody>
-      </table>
+    <!-- [routerLink] : Directiva view/helper que permiten crear links/enlaces internas de nuestro proyecto -->
+    <div class="my-2 text-left">
+      <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']">
+        Crear Cliente
+      </button>
     </div>
+
+    <div *ngIf="clientes.length == 0" class="alert alert-info">
+      No hay registros en la base de datos.
+    </div>
+
+    <table *ngIf="clientes.length > 0" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Fecha</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td> {{cliente.id}} </td>
+          <td> {{cliente.nombre}} </td>
+          <td> {{cliente.apellido | uppercase}} </td>
+          <td> {{cliente.email}} </td>
+          <td> {{cliente.createAt | date: "EEEE dd, MMMM yyyy"}} </td>
+          <td>
+            <button type="button" name="button" [routerLink]="['/clientes/form', cliente.id]"
+              class="btn btn-primary">Editar</button>
+          </td>
+          <td>
+            <button type="button" name="button" (click)="delete(cliente)" class="btn btn-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Componente del paginador 
+        - *ngIf="paginador" : Condionamos que exista la variable "paginador" 
+          ya que tanto en este compente como en el componente hijo estas variables son asignadas en el "onInit",
+          por lo cual el hijo podría obtener la variable pero sin valor.
+        - [paginador] : Directiva que permite inyectar/pasar el  "paginador" al compnoente del componente actual "ClientesComponent" al componente "PaginatorComponent".
+          Esta variable pertenece al nombre de la palabra del compnente hijo "PaginatorComponent".
+        - "paginador" : Nombre de la variable del componente actual "ClientesComponent".
+    -->
+    <app-paginator *ngIf="paginador" [paginador]="paginador"></app-paginator>
   </div>
+</div>

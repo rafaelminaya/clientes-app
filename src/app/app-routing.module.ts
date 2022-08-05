@@ -13,28 +13,32 @@ const routes: Routes = [
   {
     path: '', // http://localhost:4200
     redirectTo: '/clientes',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'directivas', // http://localhost:4200/directivas
-    component: DirectivaComponent
+    component: DirectivaComponent,
   },
   {
     path: 'clientes', // http://localhost:4200/clientes
-    component: ClientesComponent
+    component: ClientesComponent,
+  },
+  {
+    path: 'clientes/page/:page', // http://localhost:4200/clientes/page/0
+    component: ClientesComponent,
   },
   {
     path: 'clientes/form', // http://localhost:4200/clientes/form
-    component: FormComponent
+    component: FormComponent,
   },
   {
     path: 'clientes/form/:id', // http://localhost:4200/clientes/form/1
-    component: FormComponent
-  }
+    component: FormComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

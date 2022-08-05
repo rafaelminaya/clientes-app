@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-/*defginimos una posición relativa para el documento completo de la página para que el diseño del footer no se rompa*/
+/*definimos una posición relativa para el documento completo de la página para que el diseño del footer no se rompa*/
 html{
     position: relative;
     min-height: 100%;
