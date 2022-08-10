@@ -4,6 +4,7 @@ import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import { tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { ModalService } from './detalle/modal.service';
 
 @Component({
   selector: 'app-clientes',
@@ -13,13 +14,16 @@ import { ActivatedRoute } from '@angular/router';
 export class ClientesComponent implements OnInit {
   clientes: Cliente[] = [];
   paginador: any;
+  clienteSeleccionado: Cliente = new Cliente();
 
   /* - Inyección de dependencias.
-   - private clienteService: ClienteService : Inyección de dependencias del servicio para las peticiones http
-   - ActivatedRoute: Permtie obtener datos de la url, es decir observa el cambio en el parámetro.*/
+     - private clienteService: ClienteService : Inyección de dependencias del servicio para las peticiones http
+     - ActivatedRoute: Permtie obtener datos de la url, es decir observa el cambio en el parámetro.*
+     - ModalService : Servicio inyectado que permite abrir y cerrar el modal. */
   constructor(
     private clienteService: ClienteService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private modalService: ModalService
   ) {}
 
   //ngOnInit : Método parte del ciclo de vida del componente que se invocará una sola vez, que es cuando se inicia.
@@ -49,6 +53,18 @@ export class ClientesComponent implements OnInit {
           this.clientes = response.content as Cliente[];
           this.paginador = response;
         });
+    });
+
+    /* Nos suscribimos al posible cambio de la variable "notificarUpload" el cual contendrá el cliente modificado por la subida de una imagen.
+       Acá compararemos el ID del cliente ("cliente") recibido por el cambio de imagen con el cliente actual ("clienteOriginal") para así actualizar la imagen.
+     */
+    this.modalService.notificarUpload.subscribe((cliente) => {
+      this.clientes = this.clientes.map((clienteOriginal) => {
+        if (cliente.id == clienteOriginal.id) {
+          clienteOriginal.foto = cliente.foto;
+        }
+        return clienteOriginal;
+      });
     });
   }
   /* - Método para eliminar un cliente
@@ -101,5 +117,10 @@ export class ClientesComponent implements OnInit {
       }
       */
       });
+  }
+  //Método que se encarga de abrir el modal y asigna los datos del cliente para que los tenga la vista
+  abrirModal(cliente: Cliente) {
+    this.clienteSeleccionado = cliente;
+    this.modalService.abrirModal();
   }
 }

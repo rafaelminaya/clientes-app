@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './clientes/form.component';
 import { FormsModule } from '@angular/forms';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { DetalleComponent } from './clientes/detalle/detalle.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { PaginatorComponent } from './paginator/paginator.component';
     ClientesComponent,
     FormComponent,
     PaginatorComponent,
+    DetalleComponent,
   ],
   imports: [
     BrowserModule,

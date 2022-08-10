@@ -5,6 +5,7 @@ import { DirectivaComponent } from './directiva/directiva.component';
 import { FormComponent } from './clientes/form.component';
 import { registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';
+import { DetalleComponent } from './clientes/detalle/detalle.component';
 
 //Configuramos globalmente el i18n de forma global para toda la aplicación.
 registerLocaleData(localeES, 'es');
@@ -35,6 +36,12 @@ const routes: Routes = [
     path: 'clientes/form/:id', // http://localhost:4200/clientes/form/1
     component: FormComponent,
   },
+  /*
+  {
+    path: 'clientes/ver/:id', // http://localhost:4200/clientes/ver/1
+    component: DetalleComponent,
+  },
+  */
 ];
 
 @NgModule({

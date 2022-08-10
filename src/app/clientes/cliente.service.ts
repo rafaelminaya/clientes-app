@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { Cliente } from './cliente';
-import { CLIENTES } from './clientes.json';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+//import { CLIENTES } from './clientes.json';
+import {
+  HttpClient,
+  HttpEvent,
+  HttpHeaders,
+  HttpRequest,
+} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DatePipe, formatDate, registerLocaleData } from '@angular/common';
@@ -124,7 +129,6 @@ export class ClienteService {
       })
     );
   }
-  
 
   //1° Opción de manipular el response del backend, usando el operador "map()"
   create(cliente: Cliente): Observable<Cliente> {
@@ -196,5 +200,26 @@ export class ClienteService {
         return throwError(() => err);
       })
     );
+  }
+
+  subirFoto(archivo: File, id: any): Observable<HttpEvent<{}>> {
+    /* - FormData: 
+       Clase propia de JS que tiene soporte "multipart/form-data" para enviar archivos(una foto en este caso)
+       Utiliza el mismo formato que usaría un formulario si el tipo de codificación fuera "multipart/form-data
+       Usar este objeto sería simlar a obtener un objeto del sgte. elemento html: "<form enctype="multiparty/form-data" method=post "
+    */
+    let formData = new FormData();
+    //append() : Añade campos a la instancia del "formData()" usando la notación llave y valor
+    formData.append('archivo', archivo);
+    formData.append('id', id);
+
+    //La respuesta será de tipo "HttpEventType", necesario para controlar el diseño de una barra de progreso
+    const req = new HttpRequest('POST', `${this.urlEnPoint}/upload`, formData, {
+      reportProgress: true,
+    });
+
+    //No necesitará un método "pipe()" puesto que ya no retornará un "Observable<Cliente>" sino un "Observable<HttpEvent>"
+    //request() : Función que hace la petición y retorna un tipo "HttpEvent"
+    return this.http.request(req);
   }
 }

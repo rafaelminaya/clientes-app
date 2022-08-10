@@ -1,0 +1,35 @@
+/*Transparecencia negra*/
+.abrir-modal{
+    background-color: rgba(0, 0, 0, 0.7);  /* Transparecencia de color negro */
+    position: fixed;  /* Posicionamiento de forma fija */
+    /* Tomará toda la pantalla */
+    top: 0px; /*esquina superior de arriba*/
+    left: 0px;
+    width: 100%; /*ancho de toda la pantalla*/
+    height: 100%; /*alto de toda la pantalla*/
+    z-index: 1000; /*sirve para posicionarse al frente de los demás elementos. 1000 solo se aplica a clases/estilos que tengan el atributo "position" . Lo posiciona en forma descendente */
+}
+
+/* Duración de 2 segundos para la animación */
+.animacion{
+    /* es para compatilidad con Fireforx*/
+    animation-duration: 2s; 
+    animation-fill-mode: both;
+    /* es para compatilidad con Chrome y Safari*/
+    -webkit-animation-duration: 2s; 
+    -webkit-animation-fill-mode: both; 
+}
+
+/*Definimos la animación*/
+.fadeIn{
+    animation-name: fadeIn;
+    -webkit-animation-name: fadeIn;
+}
+
+/* Implementamos las reglas llamadas "key frames" o "foto gramas claves"
+Este describe cuál es el efecto de la animación a través de reglas o "fotograves claves" 
+fadeIn : Es el mismo nombre usado arriba, detrno del selector ".fadeIn"  */
+/* La opacidad parte desde "0" hasta "1" */
+@keyframes fadeIn {0% {opacitiy:0}to {opacity: 1}}
+/* La opacidad parte desde "0" hasta "1" */
+@-webkit-keyframes fadeIn {0% {opacitiy:0}to {opacity: 1}}

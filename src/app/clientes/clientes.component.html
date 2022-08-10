@@ -1,4 +1,9 @@
-<!-- Buscamos un "card", quitamos el "style" del primer div y añadimos el "class" en la etiquta "table" añadiendo lo escrito abajo-->
+<!-- Detalle del cliente que contiene la foto.
+  [cliente] : Representa una variable llamada "cliente" en el componente hijo "DetalleComponent"
+  clienteSeleccionado : Representa una variable llamada "clienteSeleccionado" en el componente padre "ClientesComponent"
+ -->
+<app-detalle *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></app-detalle>
+<!-- Buscamos un "card", quitamos el "style" del primer div y añadimos el "class" en la etiqueta "table" añadiendo lo escrito abajo-->
 <div class="card border-primary mb-3">
   <div class="card-header">Clientes</div>
   <div class="card-body text-primary">
@@ -18,7 +23,7 @@
     <table *ngIf="clientes.length > 0" class="table table-bordered table-striped">
       <thead>
         <tr>
-          <th>Id</th>
+          <th>#</th>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Email</th>
@@ -28,8 +33,21 @@
         </tr>
       </thead>
       <tbody>
+
         <tr *ngFor="let cliente of clientes">
-          <td> {{cliente.id}} </td>
+          <td>
+            <!-- <pre>
+              {{cliente.foto | json  }}
+          </pre> -->
+            <img class="img-thumbnail rounded" (click)="abrirModal(cliente)" *ngIf="cliente?.foto"
+              src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="foto del cliente"
+              style="width: 64px; cursor: pointer;">
+
+            <img class="img-thumbnail rounded" (click)="abrirModal(cliente)" *ngIf="!cliente?.foto"
+              src="http://localhost:8080/images/no-usuario.png" alt="foto del cliente"
+              style="width: 64px; cursor: pointer;">
+
+          </td>
           <td> {{cliente.nombre}} </td>
           <td> {{cliente.apellido | uppercase}} </td>
           <td> {{cliente.email}} </td>
