@@ -8,6 +8,10 @@ export const CLIENTES: Cliente[] = [
     email: 'andres@bolsaideas.com',
     createAt: '2022-07-05',
     foto: '',
+    region: {
+      id: 1,
+      nombre: 'Sudamérica',
+    },
   },
   {
     id: 2,
@@ -16,6 +20,10 @@ export const CLIENTES: Cliente[] = [
     email: 'pamela@bolsaideas.com',
     createAt: '2022-03-12',
     foto: '',
+    region: {
+      id: 1,
+      nombre: 'Sudamérica',
+    },
   },
   {
     id: 3,
@@ -24,6 +32,10 @@ export const CLIENTES: Cliente[] = [
     email: 'alvaro@bolsaideas.com',
     createAt: '2022-06-23',
     foto: '',
+    region: {
+      id: 1,
+      nombre: 'Sudamérica',
+    },
   },
   {
     id: 4,
@@ -32,6 +44,10 @@ export const CLIENTES: Cliente[] = [
     email: 'jimena@bolsaideas.com',
     createAt: '2022-01-15',
     foto: '',
+    region: {
+      id: 1,
+      nombre: 'Sudamérica',
+    },
   },
   {
     id: 5,
@@ -40,5 +56,9 @@ export const CLIENTES: Cliente[] = [
     email: 'brenda@bolsaideas.com',
     createAt: '2022-02-02',
     foto: '',
+    region: {
+      id: 1,
+      nombre: 'Sudamérica',
+    },
   },
 ];

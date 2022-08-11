@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DatePipe, formatDate, registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';
+import { Region } from './region';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,10 @@ export class ClienteService {
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient, private router: Router) {}
+
+  getRegiones(): Observable<Region[]> {
+    return this.http.get<Region[]>(this.urlEnPoint + '/regiones');
+  }
 
   //1° Opción con paginación, que es la que usaremos en adelante
   getClientesPagination(page: number): Observable<any> {

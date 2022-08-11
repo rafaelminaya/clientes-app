@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import Swal from 'sweetalert2';
+import { Region } from './region';
 
 @Component({
   selector: 'app-form',
@@ -12,6 +13,7 @@ import Swal from 'sweetalert2';
 export class FormComponent implements OnInit {
   titulo: string = 'Crear cliente';
   cliente: Cliente = new Cliente();
+  regiones: Region[] = [];
   errores: string[] = [];
   //Atributo que contiene los diferentes mensajes de error de validaciones del backend
 
@@ -48,9 +50,14 @@ export class FormComponent implements OnInit {
           .subscribe((response) => (this.cliente = response));
       }
     });
+
+    this.clienteService.getRegiones().subscribe((response) => {
+      this.regiones = response;
+    });
   }
 
   create(): void {
+    console.log(this.cliente);
     this.clienteService.create(this.cliente).subscribe(
       //Primer parámetro que contiene los mensajes de éxito.
       (cliente) => {
@@ -84,6 +91,7 @@ export class FormComponent implements OnInit {
   }
 
   update(): void {
+    console.log(this.cliente);
     this.clienteService.update(this.cliente).subscribe(
       (response) => {
         Swal.fire({
@@ -104,5 +112,27 @@ export class FormComponent implements OnInit {
         console.log('err.error.errors: ' + err.error.errors);
       }
     );
+  }
+  /*
+  Método que permite comprar 2 objetos que será usado en la vista.
+  el primer parámetro representa la interación y el segundo el objeto es el que está asginado al cliente.
+  Retornará un boolean
+  */
+  compararRegion(objeto1: Region, objeto2: Region): boolean {
+    /*
+    Esta función será exclusiva para EDITAR un cliente, ya que para crear será nulo en la condición.
+    Primero comprarmos que cualquiera de los dos objetos sean nulo, de ser así retonarmos "false",
+    caso contrario comparamos los "id" de los objetos, retornando "true" o  "false" en caso coincidan o no y seleccionamos el "id" que coincida
+    */
+    // Primera condición para seleccionar el primer "option" y muestra la selección con el mensaje "Seleccionar una región"
+    if (objeto1 === undefined && objeto2 === undefined) {
+      return true;
+    }
+    return objeto1 === null ||
+      objeto2 === null ||
+      objeto1 === undefined ||
+      objeto2 === undefined
+      ? false
+      : objeto1.id === objeto2.id;
   }
 }

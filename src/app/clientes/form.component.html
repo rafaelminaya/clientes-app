@@ -95,7 +95,25 @@
                 <label for="createAt" class="col-form-label col-sm-2">Fecha</label>
                 <div class="col-sm-6">
 
-                    <input type="date" class="form-control" [(ngModel)]="cliente.createAt" name="createAt">
+                    <input type="date" class="form-control" [(ngModel)]="cliente.createAt" name="createAt"
+                        style="width: 300px;">
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="region" class="col-form-label col-sm-2">Región</label>
+                <div class="col-sm-6">
+                    <!--  [(ngModel)]="cliente.region" : Lo seleccionado será asginado en el atributo "region" del objeto "cliente"
+                         [ngValue] : Directiva para que en vez de "value" para que permite almacenar un objeto, en este caso el "region" en cada iteración.
+                         [compareWith] : Directiva que permite comparar, en el que "compararRegion" será el nombre de la función del componente actual.
+                         Comparará el valor actual con el valor que se está iterando, devolviendo true o false para con esto poder seleccionar el "option" correspondiente
+                     -->
+                    <select [compareWith]="compararRegion" class="form-control" [(ngModel)]="cliente.region"
+                        name="region" style="width: 500px;">
+                        <option [ngValue]="undefined">--- Seleccione una región ---</option>
+                        <option *ngFor="let region of regiones" [ngValue]="region"> {{region.nombre}} </option>
+                    </select>
 
                 </div>
             </div>
