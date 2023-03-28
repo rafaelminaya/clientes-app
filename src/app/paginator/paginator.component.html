@@ -6,7 +6,7 @@
         <a class="page-link" [routerLink]="['/clientes/page/', 0]">Primera</a>
     </li>
 
-    <!-- Botón de página siguiente -->
+    <!-- Botón de página anterior -->
     <li class="page-item" *ngIf="paginador.number > 0">
         <a class="page-link" [routerLink]="['/clientes/page/', paginador.number - 1]">&laquo;</a>
     </li>

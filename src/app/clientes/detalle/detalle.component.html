@@ -24,7 +24,7 @@
                                     <li class="list-group-item"> {{cliente.createAt | date:"fullDate" }} </li>
                                     <li class="list-group-item"> {{cliente.region.nombre}} </li>
                                 </ul>
-                                <div class="input-group mb-3">
+                                <div *ngIf="service.hasRole('ROLE_ADMIN')" class="input-group mb-3">
                                     <div class="custom-file">
                                         <!--  $event : Será el evento que permitirá obtener el archivo a enviar para asignarlo a la imagen seleccionada-->
                                         <input (change)="seleccionarFoto($event)" type="file" class="custom-file-input"
@@ -56,6 +56,40 @@
                                 <img class="img-thumbnail rounded" *ngIf="cliente?.foto"
                                     src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="foto del cliente">
                             </div>
+                        </div>
+                        <div class="row">
+                            <button class="btn btn-success" type="button"
+                                [routerLink]="['/facturas/form', cliente.id]">Crear factura</button>
+                        </div>
+                        <div class="row">
+                            <div class="alert alert-info my-4" *ngIf="cliente.facturas.length == 0">
+                                No hay facturas asignadas para el cliente {{cliente. nombre}} {{cliente. apellido}}
+                            </div>
+
+                            <table class="table table-borderer table-striped my-4" *ngIf="cliente.facturas.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Folio</th>
+                                        <th>Descripción</th>
+                                        <th>Fecha</th>
+                                        <th>Total</th>
+                                        <th>Detalle</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let factura of cliente.facturas">
+                                        <td> {{ factura.id }} </td>
+                                        <td> {{ factura.descripcion }} </td>
+                                        <td> {{ factura.createAt }} </td>
+                                        <td> {{ factura.total }} </td>
+                                        <td> <button class="btn btn-primary btn-sm" type="button"
+                                                [routerLink]="['/facturas', factura.id]">Ver</button> </td>
+                                        <td><button class="btn btn-danger btn-sm" type="button"
+                                                (click)="delete(factura)">Eliminar</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

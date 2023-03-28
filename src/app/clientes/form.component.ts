@@ -124,7 +124,7 @@ export class FormComponent implements OnInit {
     Primero comprarmos que cualquiera de los dos objetos sean nulo, de ser así retonarmos "false",
     caso contrario comparamos los "id" de los objetos, retornando "true" o  "false" en caso coincidan o no y seleccionamos el "id" que coincida
     */
-    // Primera condición para seleccionar el primer "option" y muestra la selección con el mensaje "Seleccionar una región"
+    // Primera condición para seleccionar el primer "option" y muestra la selección con el mensaje "Seleccione una región"
     if (objeto1 === undefined && objeto2 === undefined) {
       return true;
     }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs';
 import Swal from 'sweetalert2';
+import { AuthService } from '../usuarios/auth.service';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
-import { tap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { ModalService } from './detalle/modal.service';
 
 @Component({
@@ -16,14 +17,19 @@ export class ClientesComponent implements OnInit {
   paginador: any;
   clienteSeleccionado: Cliente = new Cliente();
 
+  get service() {
+    return this.authService;
+  }
+
   /* - Inyección de dependencias.
-     - private clienteService: ClienteService : Inyección de dependencias del servicio para las peticiones http
-     - ActivatedRoute: Permtie obtener datos de la url, es decir observa el cambio en el parámetro.*
+     - private clienteService: ClienteService : Inyección de dependencias del servicio para las peticiones http.
+     - ActivatedRoute: Permite obtener datos de la url, es decir, observa el cambio en el parámetro en la URL.
      - ModalService : Servicio inyectado que permite abrir y cerrar el modal. */
   constructor(
     private clienteService: ClienteService,
     private activatedRoute: ActivatedRoute,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private authService: AuthService
   ) {}
 
   //ngOnInit : Método parte del ciclo de vida del componente que se invocará una sola vez, que es cuando se inicia.
@@ -33,7 +39,7 @@ export class ClientesComponent implements OnInit {
       //get('page') : Es el nombre del parámetro que obtenemos de la URL.
       let page: number = +params.get('page');
 
-      //Validación para la primera página, para cuando no haya este parámetro se le asgine el valor de cero "0".
+      //Validación para la primera página, para cuando no haya este parámetro se le asigne el valor de cero "0".
       if (!page) {
         page = 0;
       }
@@ -68,7 +74,7 @@ export class ClientesComponent implements OnInit {
     });
   }
   /* - Método para eliminar un cliente
-     -cliente : Es objeto es enviado en el evento del botón. */
+     - cliente : Este objeto es enviado en el evento del botón. */
   delete(cliente: Cliente): void {
     //Aplicamos una venta de alerta de la plantilla de la documentación de "sweetalert2"
     const swalWithBootstrapButtons = Swal.mixin({

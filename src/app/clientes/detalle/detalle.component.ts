@@ -1,10 +1,13 @@
+import { HttpEventType } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/usuarios/auth.service';
+import Swal from 'sweetalert2';
 import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
-import { ActivatedRoute } from '@angular/router';
-import Swal from 'sweetalert2';
-import { HttpEventType } from '@angular/common/http';
 import { ModalService } from './modal.service';
+import { FacturaService } from '../../facturas/services/factura.service';
+import { Factura } from '../../facturas/models/factura';
 
 @Component({
   selector: 'app-detalle',
@@ -18,6 +21,10 @@ export class DetalleComponent implements OnInit {
   fotoSeleccionada: File;
   //Variable que representará la barra de progreso
   progreso: number = 0;
+
+  get service() {
+    return this.authService;
+  }
 
   /*
   private clienteService: ClienteService : 
@@ -33,11 +40,13 @@ export class DetalleComponent implements OnInit {
   constructor(
     private clienteService: ClienteService,
     private activatedRoute: ActivatedRoute,
-    public modalService: ModalService
+    public modalService: ModalService,
+    private authService: AuthService,
+    private facturaService: FacturaService
   ) {}
 
   ngOnInit(): void {
-    //Esto iba cuando se obtenían los datos delk cliente en una nueva página
+    //Esto iba cuando se obtenían los datos del cliente en una nueva página
     /*
     this.activatedRoute.paramMap.subscribe((params) => {
       //El signo "+"" convierte a tipo de dato number.
@@ -57,7 +66,7 @@ export class DetalleComponent implements OnInit {
 
   seleccionarFoto(event: any): void {
     /* - event.target.files[0] : Asigna la imagen seleccionada en la variable local.
-       - files[0] : Seleccionamos el primer índica ya que es el que contiene el archivo.
+       - files[0] : Seleccionamos el primer índice ya que es el que contiene el archivo.
     */
     this.fotoSeleccionada = event.target.files[0];
     //Reiniciamos la barra de progreso al seleccionar una nueva foto
@@ -88,15 +97,15 @@ export class DetalleComponent implements OnInit {
         .subirFoto(this.fotoSeleccionada, this.cliente.id)
         .subscribe((event) => {
           //La respuesta será de tipo "HttpEventType", necesario para controlar el diseño de una barra de progreso
-          //Si es un envento de barra de progreso, asignamos el valor a nuestra variable "this.progreso"
+          //Si es un evento de barra de progreso, asignamos el valor a nuestra variable "this.progreso"
           if (event.type === HttpEventType.UploadProgress) {
             this.progreso = Math.round((event.loaded / event.total) * 100);
           }
-          //En caso el evento sea de una respuesta asgianmos el cuerpo de esa respuesta a nuestro variable "this.cliente"
+          //En caso el evento sea de una respuesta asignamos el cuerpo de esa respuesta a nuestro variable "this.cliente"
           else if (event.type === HttpEventType.Response) {
-            let resposne: any = event.body;
+            let response: any = event.body;
 
-            this.cliente = resposne.cliente as Cliente;
+            this.cliente = response.cliente as Cliente;
             //emit() : Función que permite emitir, en este caso enviar el valor de la variable por el método "get()" de la variable "_notificarUpload" del "modalService"
             this.modalService.notificarUpload.emit(this.cliente);
             Swal.fire(
@@ -114,5 +123,44 @@ export class DetalleComponent implements OnInit {
     this.modalService.cerrarModal();
     this.fotoSeleccionada = null;
     this.progreso = 0;
+  }
+
+  delete(factura: Factura): void {
+    //Aplicamos una venta de alerta de la plantilla de la documentación de "sweetalert2"
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger',
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Estás seguro?',
+        text: `¿Seguro que desea eliminar la factura ${factura.descripcion} ?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar!',
+        cancelButtonText: 'No, cancelar!',
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          //Hacemos le consumo de la API de eliminar
+          this.facturaService.delete(factura.id).subscribe(() => {
+            //filter() : Usamos esta función de JS para iterar el arreglo, solo considerando los registros cuyo objeto cliente sea diferente del recibido a eliminar
+            this.cliente.facturas = this.cliente.facturas.filter(
+              (fac) => fac !== factura
+            );
+
+            swalWithBootstrapButtons.fire(
+              'Factura eliminada!',
+              `Factura ${factura.descripcion} eliminado con éxito!`,
+              'success'
+            );
+          });
+        }
+      });
   }
 }

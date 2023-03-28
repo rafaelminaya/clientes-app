@@ -31,23 +31,23 @@ export class PaginatorComponent implements OnInit, OnChanges {
      - changes: SimpleChanges : Obtiene los cambios del atributo a indicar.
      Por medio del atributo "changes" podremos obtener los cambios del atributo "@Input() paginador: any" */
   ngOnChanges(changes: SimpleChanges): void {
-    //changes['paginador'] : Manejamos de esta forma el atributo "paginador" ya que "changes" asgina los valor como parte de un arreglo, debido al tipo de dato "SimpleChanges"
-    let paginadorACtualizado = changes['paginador'];
+    //changes['paginador'] : Manejamos de esta forma el atributo "paginador" ya que "changes" asigna el valor como parte de un arreglo, debido al tipo de dato "SimpleChanges"
+    let paginadorActualizado = changes['paginador'];
 
-    //Verificamos si "paginadorACtualizado" tiene una valor/estado anterior
-    //para llamar recien llamar a la función "initPaginator" que hace toda la paginación.
-    if (paginadorACtualizado.previousValue) {
+    //Verificamos si "paginadorActualizado" tiene una valor/estado anterior
+    //para recien llamar a la función "initPaginator" que hace toda la paginación.
+    if (paginadorActualizado.previousValue) {
       this.initPaginator();
     }
   }
 
   //Esta es la función que que hará la paginación
-  //Esta función obtiene los rangos que se puede utilizar tanto en el "ngOnInit()" y en el"ngOnChanges()"
+  //Esta función obtiene los rangos que vamos a utilizar tanto en el "ngOnInit()" y en el"ngOnChanges()"
   private initPaginator(): void {
     /* - El "this.desde" sería el mínimo entre dos valores, y el "this.hasta" sería el máximo tambien entre dos valores
        - "1" : Representa el mínimo valor que puede tener la página "desde"
        - this.paginador.number - 4 : Representa la página actual restado con 4
-       - this.paginador.totalPages - 5 :Representa el taotl de páginas restado con 5
+       - this.paginador.totalPages - 5 :Representa el total de páginas restado con 5
     */
     this.desde = Math.min(
       Math.max(1, this.paginador.number - 4),

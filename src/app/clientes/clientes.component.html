@@ -11,7 +11,8 @@
 
     <!-- [routerLink] : Directiva view/helper que permiten crear links/enlaces internas de nuestro proyecto -->
     <div class="my-2 text-left">
-      <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']">
+      <button *ngIf="service.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-primary" type="button"
+        [routerLink]="['/clientes/form']">
         Crear Cliente
       </button>
     </div>
@@ -23,18 +24,22 @@
     <table *ngIf="clientes.length > 0" class="table table-bordered table-striped">
       <thead>
         <tr>
+          <!-- <th *ngIf="service.hasRole('ROLE_USER')">#</th> -->
           <th>#</th>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Email</th>
           <th>Fecha</th>
-          <th>Editar</th>
-          <th>Eliminar</th>
+          <th>Crear factura</th>
+          <th *ngIf="service.hasRole('ROLE_ADMIN')">Editar</th>
+          <th *ngIf="service.hasRole('ROLE_ADMIN')">Eliminar</th>
         </tr>
       </thead>
       <tbody>
 
         <tr *ngFor="let cliente of clientes">
+
+          <!-- <td *ngIf="service.hasRole('ROLE_USER')"> -->
           <td>
             <!-- <pre>
               {{cliente.foto | json  }}
@@ -52,11 +57,14 @@
           <td> {{cliente.apellido | uppercase}} </td>
           <td> {{cliente.email}} </td>
           <td> {{cliente.createAt | date: "EEEE dd, MMMM yyyy"}} </td>
-          <td>
-            <button type="button" name="button" [routerLink]="['/clientes/form', cliente.id]"
+          <td><button class="btn btn-success" type="button" [routerLink]="['/facturas/form', cliente.id]">Crear
+              factura</button>
+          </td>
+          <td *ngIf="service.hasRole('ROLE_ADMIN')">
+            <button type="button" name="button" [routerLink]="['/clientes/form', cliente. id]"
               class="btn btn-primary">Editar</button>
           </td>
-          <td>
+          <td *ngIf="service.hasRole('ROLE_ADMIN')">
             <button type="button" name="button" (click)="delete(cliente)" class="btn btn-danger">Eliminar</button>
           </td>
         </tr>
@@ -67,8 +75,9 @@
         - *ngIf="paginador" : Condionamos que exista la variable "paginador" 
           ya que tanto en este compente como en el componente hijo estas variables son asignadas en el "onInit",
           por lo cual el hijo podría obtener la variable pero sin valor.
-        - [paginador] : Directiva que permite inyectar/pasar el  "paginador" al compnoente del componente actual "ClientesComponent" al componente "PaginatorComponent".
-          Esta variable pertenece al nombre de la palabra del compnente hijo "PaginatorComponent".
+        - [paginador] : Directiva que permite inyectar/pasar el "paginador" al componente hijo, es decir, 
+          del componente actual "ClientesComponent" al componente "PaginatorComponent".
+          Esta variable pertenece al nombre de la palabra del componente hijo "PaginatorComponent".
         - "paginador" : Nombre de la variable del componente actual "ClientesComponent".
     -->
     <app-paginator *ngIf="paginador" [paginador]="paginador"></app-paginator>
