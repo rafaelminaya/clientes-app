@@ -1,8 +1,8 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -54,7 +54,9 @@ import { LoginComponent } from './usuarios/login.component';
     ReactiveFormsModule,
     // Mödulos de Angular material par  el calendario
     MatDatepickerModule,
-    MatNativeDateModule,
+    //MatNativeDateModule, // Este ya no será usado, será reemplazado por MatMomentDateModule
+    // Módulo instalado de moment js
+    MatMomentDateModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-PE' },
