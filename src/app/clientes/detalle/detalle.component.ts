@@ -1,20 +1,21 @@
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpEventType } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { AuthService } from 'src/app/usuarios/auth.service';
 import Swal from 'sweetalert2';
+import { Factura } from '../../facturas/models/factura';
+import { FacturaService } from '../../facturas/services/factura.service';
 import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
 import { ModalService } from './modal.service';
-import { FacturaService } from '../../facturas/services/factura.service';
-import { Factura } from '../../facturas/models/factura';
 
 @Component({
   selector: 'app-detalle',
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.css'],
 })
-export class DetalleComponent implements OnInit {
+export class DetalleComponent implements OnInit, OnDestroy {
   @Input() cliente: Cliente = new Cliente();
   titulo: string = 'Detalle del cliente';
   //usamos el modificador "private" ya este atributo no será usado en la vista, solo en este archivo ".ts"
@@ -62,6 +63,10 @@ export class DetalleComponent implements OnInit {
       }
     });
     */
+  }
+
+  ngOnDestroy(): void {
+    this.cerrarModal();
   }
 
   seleccionarFoto(event: any): void {

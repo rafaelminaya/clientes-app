@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { Cliente } from './cliente';
-
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { Region } from './region';
 
 @Injectable({
@@ -130,6 +129,7 @@ export class ClienteService {
 
   //1° Opción de manipular el response del backend, usando el operador "map()"
   create(cliente: Cliente): Observable<Cliente> {
+    console.log('cliente - create', cliente);
     return this.http.post(this.urlEnPoint, cliente).pipe(
       //map : Transformamos la respuesta, primero indicar que es de tipo "any" (ya que tendremos 2 objetos en la respuesta) y parsemos uno de ellos a tipo "Cliente"
       map((response: any) => response.cliente as Cliente),
@@ -151,6 +151,7 @@ export class ClienteService {
 
   //2° Opción de manipular el response del backend, usando el tipo de dato "any"
   update(cliente: Cliente): Observable<any> {
+    console.log('cliente - update', cliente);
     return this.http
       .put<any>(`${this.urlEnPoint}/${cliente.id} `, cliente)
       .pipe(

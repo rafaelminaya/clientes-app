@@ -57,7 +57,7 @@
                                     src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="foto del cliente">
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" *ngIf="service.hasRole('ROLE_ADMIN')">
                             <button class="btn btn-success" type="button"
                                 [routerLink]="['/facturas/form', cliente.id]">Crear factura</button>
                         </div>
@@ -74,7 +74,7 @@
                                         <th>Fecha</th>
                                         <th>Total</th>
                                         <th>Detalle</th>
-                                        <th>Eliminar</th>
+                                        <th *ngIf="service.hasRole('ROLE_ADMIN')">Eliminar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -83,10 +83,14 @@
                                         <td> {{ factura.descripcion }} </td>
                                         <td> {{ factura.createAt }} </td>
                                         <td> {{ factura.total }} </td>
-                                        <td> <button class="btn btn-primary btn-sm" type="button"
-                                                [routerLink]="['/facturas', factura.id]">Ver</button> </td>
-                                        <td><button class="btn btn-danger btn-sm" type="button"
-                                                (click)="delete(factura)">Eliminar</button></td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm" type="button"
+                                                [routerLink]="['/facturas', factura.id]">Ver</button>
+                                        </td>
+                                        <td *ngIf="service.hasRole('ROLE_ADMIN')">
+                                            <button class="btn btn-danger btn-sm" type="button"
+                                                (click)="delete(factura)">Eliminar</button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

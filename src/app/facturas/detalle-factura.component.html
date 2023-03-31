@@ -36,16 +36,16 @@
             </tbody>
         </table>
         <!--float-right : Estilo propio de bootstrap para alinear a la derecha -->
-        <h5 class="float-right">
+        <h2 class="float-right">
             <span>Gran total</span>: <span class="badge badge-secondary"> {{factura.total}} </span>
-        </h5>
+        </h2>
         <div class="card border-info mb-4" style="max-width: 350px">
             <div class="card card-header">
                 Observaciones
             </div>
             <div class="card card-body">
                 <p *ngIf="!factura.observacion"> No tiene observación</p>
-                <p *ngIf="factura.observacion"> {{factura.obsercion}} </p>
+                <p *ngIf="factura.observacion"> {{factura.observacion}} </p>
             </div>
         </div>
     </div>

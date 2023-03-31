@@ -92,6 +92,8 @@ export class FormComponent implements OnInit {
 
   update(): void {
     console.log(this.cliente);
+    // OPCIONAL SI YA ESTÁ EL "allowSetters = true" EN EL BACKEND. Asignamos las facturas como "null", ya que debe ser enviado este atributo, sin embargo no hará ninguna modificación
+    this.cliente.facturas = null;
     this.clienteService.update(this.cliente).subscribe(
       (response) => {
         Swal.fire({

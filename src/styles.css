@@ -7,4 +7,14 @@ html{
 /*añadimos un "margin-bottom" que tenga la misma altura que el estilo ".footer" */
 body {
     margin-bottom: 60px;
+    min-height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
+
+.wrap{
+    padding-bottom: 60px;
+}  
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

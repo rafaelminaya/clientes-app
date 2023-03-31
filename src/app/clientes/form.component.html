@@ -4,7 +4,10 @@
         {{err}}
     </li>
 </ul>
-<div class="card bg-dark text-white">
+<!-- DISEÑO OSCURO -->
+<!-- <div class="card bg-dark text-white"> -->
+<!-- DISEÑO CLARO -->
+<div class="card bg-light">
     <!-- <div class="card-header">{{titulo}}</div> -->
     <div class="card-header">{{ !cliente.id ? 'Crear Cliente': 'Editar Cliente'}}</div>
     <div class="card-body">
@@ -95,8 +98,23 @@
                 <label for="createAt" class="col-form-label col-sm-2">Fecha</label>
                 <div class="col-sm-6">
 
-                    <input type="date" class="form-control" [(ngModel)]="cliente.createAt" name="createAt"
-                        style="width: 300px;">
+                    <!-- <input type="date" class="form-control" [(ngModel)]="cliente.createAt" name="createAt"
+                        style="width: 300px;"> -->
+
+                    <mat-form-field appearance="fill">
+
+                        <mat-label>Fecha</mat-label>
+
+                        <input matInput [matDatepicker]="miDatePicker" class="form-control"
+                            [(ngModel)]="cliente.createAt" name="createAt">
+
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+
+                        <mat-datepicker-toggle matSuffix [for]="miDatePicker"></mat-datepicker-toggle>
+
+                        <mat-datepicker #miDatePicker></mat-datepicker>
+
+                    </mat-form-field>
 
                 </div>
             </div>
