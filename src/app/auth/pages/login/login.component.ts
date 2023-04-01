@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import Swal from 'sweetalert2';
-import { AuthService } from './auth.service';
-import { Usuario } from './usuario';
+import { Usuario } from '../../models/usuario';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,6 @@ export class LoginComponent implements OnInit {
   // PROPIEDADES
   titulo: string = 'Por favor inicia sesión!';
   usuario: Usuario;
-
   // CONSTRUCTOR
   constructor(private authService: AuthService, private router: Router) {
     this.usuario = new Usuario();

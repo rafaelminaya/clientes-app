@@ -1,23 +1,22 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { ClienteService } from '../../clientes/services/cliente.service';
-import { Factura } from '../models/factura';
-import { Producto } from '../models/producto';
-import { FacturaService } from '../services/factura.service';
-import { ItemFactura } from '../models/item-factura';
+import { Observable, map, switchMap } from 'rxjs';
+import { ClienteService } from 'src/app/clientes/services/cliente.service';
 import Swal from 'sweetalert2';
+import { Factura } from '../../models/factura';
+import { ItemFactura } from '../../models/item-factura';
+import { Producto } from '../../models/producto';
+import { FacturaService } from '../../services/factura.service';
 
 @Component({
-  selector: 'app-facturas',
-  templateUrl: './facturas.component.html',
+  selector: 'app-agregar',
+  templateUrl: './agregar.component.html',
   styles: [],
 })
-export class FacturasComponent implements OnInit {
+export class AgregarComponent implements OnInit {
   // PROPIEDADES
   titulo: string = 'Nueva Factura';
   factura: Factura = new Factura();
@@ -27,7 +26,6 @@ export class FacturasComponent implements OnInit {
   productos: string[] = ['Mesa', 'Tablet', 'Sony', 'Samsung'];
   productosFiltrados: Observable<Producto[]>;
 
-  // CONSTRUCTOR
   constructor(
     private clienteService: ClienteService,
     private facturaService: FacturaService,

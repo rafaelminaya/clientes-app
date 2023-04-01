@@ -17,12 +17,12 @@ import { FormComponent } from './clientes/form.component';
 import { DirectivaComponent } from './directiva/directiva.component';
 import { DetalleFacturaComponent } from './facturas/detalle-factura.component';
 import { FacturasComponent } from './facturas/facturas/facturas.component';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { HeaderComponent } from './shared/header/header.component';
 import { PaginatorComponent } from './paginator/paginator.component';
-import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
-import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
 import { LoginComponent } from './usuarios/login.component';
+import { TokenInterceptor } from './auth/interceptors/token.interceptor';
+import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [

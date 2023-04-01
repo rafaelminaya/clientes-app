@@ -25,6 +25,23 @@ const routes: Routes = [
     path: 'directivas', // http://localhost:4200/directivas
     component: DirectivaComponent,
   },
+
+  {
+    path: 'clientes',
+    loadChildren: () =>
+      import('./clientes/clientes.module').then((m) => m.ClientesModule),
+  },
+  {
+    path: 'facturas',
+    loadChildren: () =>
+      import('./facturas/facturas.module').then((m) => m.FacturasModule),
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+
+  /*
   {
     path: 'clientes', // http://localhost:4200/clientes
     component: ClientesComponent,
@@ -45,10 +62,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { role: 'ROLE_ADMIN' }, // Parámetro enviado a los guards, pero que solo será usado por "RoleGuard"
   },
-  {
-    path: 'login', // http://localhost:4200/login
-    component: LoginComponent,
-  },
+
   {
     path: 'facturas/:id', // http://localhost:4200/facturas/1
     component: DetalleFacturaComponent,
@@ -60,6 +74,17 @@ const routes: Routes = [
     component: FacturasComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { role: 'ROLE_ADMIN' }, // Parámetro enviado a los guards, pero que solo será usado por "RoleGuard"
+  },
+
+  {
+    path: 'login', // http://localhost:4200/login
+    component: LoginComponent,
+  },
+  */
+
+  {
+    path: '**',
+    redirectTo: 'clientes',
   },
   /*
   {

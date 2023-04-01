@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Cliente } from './models/cliente';
-import { ClienteService } from './services/cliente.service';
 import Swal from 'sweetalert2';
-import { Region } from './models/region';
+import { Cliente } from '../../models/cliente';
+import { Region } from '../../models/region';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css'],
+  selector: 'app-agregar',
+  templateUrl: './agregar.component.html',
+  styles: [],
 })
-export class FormComponent implements OnInit {
+export class AgregarComponent implements OnInit {
+  // PROPIEDADES
   titulo: string = 'Crear cliente';
   cliente: Cliente = new Cliente();
   regiones: Region[] = [];
@@ -23,12 +24,15 @@ export class FormComponent implements OnInit {
   private router: Router : Inyectamos la dependencia del Router para poder hacer redirecciones.
   ActivatedRoute: Permtie obtener datos de la url, es decir observa el cambio en el parámetro.
   */
+
+  // CONSTRUCTOR
   constructor(
     private clienteService: ClienteService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
 
+  // MÉTODOS
   ngOnInit(): void {
     this.cargarCliente();
   }

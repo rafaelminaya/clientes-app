@@ -9,17 +9,20 @@ import {
   UrlSegment,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanLoad {
+  // CONSTRUCTOR
   constructor(private authService: AuthService, private router: Router) {}
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ): boolean | Observable<boolean> | Promise<boolean> {
+
+  // MÉTODOS
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
     console.log('AuthGuard', route.data);
 
     if (this.authService.isAuthenticated()) {
@@ -36,11 +39,10 @@ export class AuthGuard implements CanActivate, CanLoad {
 
     return false;
   }
-
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> | boolean {
+  canLoad(
+    route: Route,
+    segments: UrlSegment[]
+  ): Observable<boolean> | Promise<boolean> | boolean {
     console.log('AuthGuard', route.data);
 
     if (this.authService.isAuthenticated()) {

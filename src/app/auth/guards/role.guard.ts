@@ -10,18 +10,20 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleGuard implements CanActivate, CanLoad {
+  // CONSTRUCTOR
   constructor(private authService: AuthService, private router: Router) {}
 
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ): boolean | Observable<boolean> | Promise<boolean> {
+  // MÉTODOS
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
     // Recibiremos información por medio de los parámetros del guard
     let role = route.data['role'] as string;
     console.log('RoleGuard', role);
@@ -47,11 +49,10 @@ export class RoleGuard implements CanActivate, CanLoad {
 
     return false;
   }
-
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> | boolean {
+  canLoad(
+    route: Route,
+    segments: UrlSegment[]
+  ): Observable<boolean> | Promise<boolean> | boolean {
     // Recibiremos información por medio de los parámetros del guard
     let role = route.data['role'] as string;
     console.log('RoleGuard', role);

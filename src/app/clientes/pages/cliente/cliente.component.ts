@@ -1,21 +1,23 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpEventType } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
+import { Factura } from 'src/app/facturas/models/factura';
+import { FacturaService } from 'src/app/facturas/services/factura.service';
 import { AuthService } from 'src/app/usuarios/auth.service';
 import Swal from 'sweetalert2';
-import { Factura } from '../../facturas/models/factura';
-import { FacturaService } from '../../facturas/services/factura.service';
-import { Cliente } from '../models/cliente';
-import { ClienteService } from '../services/cliente.service';
-import { ModalService } from './modal.service';
+
+import { Cliente } from '../../models/cliente';
+import { ClienteService } from '../../services/cliente.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
-  selector: 'app-detalle',
-  templateUrl: './detalle.component.html',
-  styleUrls: ['./detalle.component.css'],
+  selector: 'app-cliente',
+  templateUrl: './cliente.component.html',
+  styleUrls: ['./cliente.component.css'],
 })
-export class DetalleComponent implements OnInit, OnDestroy {
+export class ClienteComponent implements OnInit {
+  // PROPIEDADES
   @Input() cliente: Cliente = new Cliente();
   titulo: string = 'Detalle del cliente';
   //usamos el modificador "private" ya este atributo no será usado en la vista, solo en este archivo ".ts"
@@ -46,6 +48,7 @@ export class DetalleComponent implements OnInit, OnDestroy {
     private facturaService: FacturaService
   ) {}
 
+  // MÉTODOS
   ngOnInit(): void {
     //Esto iba cuando se obtenían los datos del cliente en una nueva página
     /*

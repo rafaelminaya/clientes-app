@@ -2,18 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { tap } from 'rxjs';
+
 import Swal from 'sweetalert2';
-import { AuthService } from '../usuarios/auth.service';
-import { Cliente } from './models/cliente';
-import { ClienteService } from './services/cliente.service';
-import { ModalService } from './detalle/modal.service';
+import { Cliente } from '../../models/cliente';
+import { ClienteService } from '../../services/cliente.service';
+import { ModalService } from '../../services/modal.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
-  selector: 'app-clientes',
-  templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css'],
+  selector: 'app-listado',
+  templateUrl: './listado.component.html',
+  styles: [],
 })
-export class ClientesComponent implements OnInit {
+export class ListadoComponent implements OnInit {
+  // PROPIEDADES
   clientes: Cliente[] = [];
   paginador: any;
   clienteSeleccionado: Cliente = new Cliente();
@@ -26,6 +28,7 @@ export class ClientesComponent implements OnInit {
      - private clienteService: ClienteService : Inyección de dependencias del servicio para las peticiones http.
      - ActivatedRoute: Permite obtener datos de la url, es decir, observa el cambio en el parámetro en la URL.
      - ModalService : Servicio inyectado que permite abrir y cerrar el modal. */
+  // CONSTRUCTOR
   constructor(
     private clienteService: ClienteService,
     private activatedRoute: ActivatedRoute,
@@ -33,7 +36,7 @@ export class ClientesComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  //ngOnInit : Método parte del ciclo de vida del componente que se invocará una sola vez, que es cuando se inicia.
+  // MÉTODOS
   ngOnInit(): void {
     /* - this.activatedRoute.paramMap : Observable que permite recuperar un parámetro de la ruta que cambie constantemente.*/
     this.activatedRoute.paramMap.subscribe((params) => {
