@@ -4,9 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Factura } from 'src/app/facturas/models/factura';
 import { FacturaService } from 'src/app/facturas/services/factura.service';
-import { AuthService } from 'src/app/usuarios/auth.service';
 import Swal from 'sweetalert2';
-
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { Cliente } from '../../models/cliente';
 import { ClienteService } from '../../services/cliente.service';
 import { ModalService } from '../../services/modal.service';

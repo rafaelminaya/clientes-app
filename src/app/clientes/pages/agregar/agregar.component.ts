@@ -63,9 +63,9 @@ export class AgregarComponent implements OnInit {
 
   create(): void {
     console.log(this.cliente);
-    this.clienteService.create(this.cliente).subscribe(
+    this.clienteService.create(this.cliente).subscribe({
       //Primer parámetro que contiene los mensajes de éxito.
-      (cliente) => {
+      next: (cliente) => {
         // Usamos la librería "SweetAlert2" instalada por medio ded npm
         Swal.fire(
           'Nuevo cliente',
@@ -86,23 +86,34 @@ export class AgregarComponent implements OnInit {
         this.router.navigate(['/clientes']);
       },
       //Segundo parámetro que contiene los mensajes de error
-      //Asignamos los valores obtenidos del error a la variable local "this.errores", parseado en arreglo de strings "string[]"
-      (err) => {
-        this.errores = err.error.errors as string[];
-        console.log('Codigo de error desde el backend: ' + err.status);
-        console.log('err.error.errors: ' + err.error.errors);
-      }
-    );
+      error:
+        //Asignamos los valores obtenidos del error a la variable local "this.errores", parseado en arreglo de strings "string[]"
+        (err) => {
+          this.errores = err.error as string[];
+          console.log('this.errores', this.errores);
+          console.log('Codigo de error desde el backend: ' + err.status);
+          console.log('err.error', err.error);
+
+          Swal.fire({
+            title: `${err.error.mensaje}`,
+            text: `${err.error.error}`,
+            icon: 'error',
+            confirmButtonText: 'De acuerdo',
+            timer: 5000,
+          });
+        },
+    });
   }
 
   update(): void {
     console.log(this.cliente);
     // OPCIONAL SI YA ESTÁ EL "allowSetters = true" EN EL BACKEND. Asignamos las facturas como "null", ya que debe ser enviado este atributo, sin embargo no hará ninguna modificación
     this.cliente.facturas = null;
-    this.clienteService.update(this.cliente).subscribe(
-      (response) => {
+
+    this.clienteService.update(this.cliente).subscribe({
+      next: (response) => {
         Swal.fire({
-          title: 'Cliente actualizado',
+          title: '"Error al registrar a la base de datos.',
           text: `${response.mensaje} : ${response.cliente.nombre}`,
           icon: 'success',
           confirmButtonText: 'De acuerdo',
@@ -111,14 +122,23 @@ export class AgregarComponent implements OnInit {
 
         this.router.navigate(['/clientes']);
       },
-      //Segundo parámetro que contiene los mensajes de error
-      //Asignamos los valores obtenidos del error a la variable local "this.errores", parseado en arreglo de strings "string[]"
-      (err) => {
-        this.errores = err.error.errors as string[];
-        console.log('Codigo de error desde el backend: ' + err.status);
-        console.log('err.error.errors: ' + err.error.errors);
-      }
-    );
+      error:
+        //Segundo parámetro que contiene los mensajes de error
+        //Asignamos los valores obtenidos del error a la variable local "this.errores", parseado en arreglo de strings "string[]"
+        (err) => {
+          this.errores = err.error as string[];
+          console.log('Codigo de error desde el backend: ' + err.status);
+          console.log('err.error', err.error);
+
+          Swal.fire({
+            title: `${err.error.mensaje}`,
+            text: `${err.error.error}`,
+            icon: 'error',
+            confirmButtonText: 'De acuerdo',
+            timer: 5000,
+          });
+        },
+    });
   }
   /*
   Método que permite comprar 2 objetos que será usado en la vista.

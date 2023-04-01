@@ -1,62 +1,28 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import localeES from '@angular/common/locales/es-PE';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ClientesComponent } from './clientes/clientes.component';
-import { DetalleComponent } from './clientes/detalle/detalle.component';
-import { FormComponent } from './clientes/form.component';
-import { DirectivaComponent } from './directiva/directiva.component';
-import { DetalleFacturaComponent } from './facturas/detalle-factura.component';
-import { FacturasComponent } from './facturas/facturas/facturas.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { PaginatorComponent } from './paginator/paginator.component';
-import { LoginComponent } from './usuarios/login.component';
-import { TokenInterceptor } from './auth/interceptors/token.interceptor';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
+import { TokenInterceptor } from './auth/interceptors/token.interceptor';
+import { DirectivaComponent } from './directiva/directiva.component';
+import { SharedModule } from './shared/shared.module';
+//Configuramos globalmente el i18n de forma global para toda la aplicación.
+registerLocaleData(localeES);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    DirectivaComponent,
-    ClientesComponent,
-    FormComponent,
-    PaginatorComponent,
-    DetalleComponent,
-    LoginComponent,
-    DetalleFacturaComponent,
-    FacturasComponent,
-  ],
+  declarations: [AppComponent, DirectivaComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     //Importamos el módulo de peticiociones http de angular  para poder utilizarlo en la clase "ClienteService"
     HttpClientModule,
-    //Importamos el módulo de formularios de angular para el uso de formularios y poder usarlo en el "FormComponent"
-    FormsModule,
-
     BrowserAnimationsModule,
-    // Estos 4 módulos son para poder usar las diferentes etiquetas y atributos en el Template del "Autocomplete"
-    MatAutocompleteModule,
-    MatInputModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    // Mödulos de Angular material par  el calendario
-    MatDatepickerModule,
-    //MatNativeDateModule, // Este ya no será usado, será reemplazado por MatMomentDateModule
-    // Módulo instalado de moment js
-    MatMomentDateModule,
+    SharedModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-PE' },

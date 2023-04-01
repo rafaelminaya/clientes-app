@@ -10,13 +10,13 @@ import { MatInputModule } from '@angular/material/input';
   declarations: [],
   imports: [],
   exports: [
-    // módulos material
+    //Importamos el módulo de formularios de angular para el uso de la directiva [(ngModel)] en el template
     FormsModule,
     // Estos 4 módulos son para poder usar las diferentes etiquetas y atributos en el Template del "Autocomplete"
     MatAutocompleteModule,
     MatInputModule,
     MatFormFieldModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, // Permitirá usar el "FormComponent", el cual es usado para el auto complete
     // Mödulos de Angular material par  el calendario
     MatDatepickerModule,
     //MatNativeDateModule, // Este ya no será usado, será reemplazado por MatMomentDateModule

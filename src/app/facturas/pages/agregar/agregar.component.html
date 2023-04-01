@@ -4,7 +4,7 @@
         <h4 class="card-title">
             <a [routerLink]="['/clientes']" class="btn btn-light btn-xs">&laquo; volver</a>
         </h4>
-        <form #facturaForm="ngForm">
+        <form autocomplete="off" #facturaForm="ngForm">
             <!-- CLIENTE -->
             <div class="form-group row" *ngIf="factura.cliente">
                 <label for="cliente" class="col-sm-2 col-form-label">Cliente</label>
@@ -16,10 +16,10 @@
 
             <!-- DESCRIPCION -->
             <div class="form-group row">
-                <label for="descripcion" class="col-sm-2 col-form-label">Descripción</label>
+                <label for="txt_descripcion" class="col-sm-2 col-form-label">Descripción</label>
                 <div class="col-sm-6">
-                    <input type="text" name="descripcion" [(ngModel)]="factura.descripcion" class="form-control"
-                        required #descripcion="ngModel">
+                    <input type="text" id="txt_descripcion" name="descripcion" [(ngModel)]="factura.descripcion"
+                        class="form-control" required #descripcion="ngModel">
                     <!-- MENSAJE DE VALIDACION -->
                     <div class="alert alert-danger"
                         *ngIf="descripcion.invalid && descripcion.touched || descripcion.invalid && facturaForm.submitted">
@@ -29,20 +29,22 @@
             </div>
             <!-- OBSERVACION -->
             <div class="form-group row">
-                <label for="observacion" class="col-sm-2 col-form-label">Observación</label>
+                <label for="txt_observacion" class="col-sm-2 col-form-label">Observación</label>
                 <div class="col-sm-6">
-                    <textarea name="observacion" [(ngModel)]="factura.observacion" class="form-control"></textarea>
+                    <textarea name="observacion" id="txt_observacion" [(ngModel)]="factura.observacion"
+                        class="form-control"></textarea>
                 </div>
             </div>
             <!-- PRODUCTOS -->
             <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Producto</label>
                 <div class="col-sm-6">
 
                     <mat-form-field appearance="fill">
 
-                        <mat-label>Producto</mat-label>
+                        <!-- <mat-label>Buscar producto</mat-label> -->
 
-                        <input type="text" placeholder="Añadir producto" aria-label="Productos" matInput
+                        <input type="text" placeholder="Buscar producto" aria-label="Productos" matInput
                             [formControl]="autocompleteControl" [matAutocomplete]="auto">
 
                         <!-- [displayWith]="mostrarNombre" : 
