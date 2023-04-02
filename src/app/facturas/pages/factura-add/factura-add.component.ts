@@ -12,11 +12,11 @@ import { Producto } from '../../models/producto';
 import { FacturaService } from '../../services/factura.service';
 
 @Component({
-  selector: 'app-agregar',
-  templateUrl: './agregar.component.html',
+  selector: 'app-factura-add',
+  templateUrl: './factura-add.component.html',
   styles: [],
 })
-export class AgregarComponent implements OnInit {
+export class FacturaAddComponent implements OnInit {
   // PROPIEDADES
   titulo: string = 'Nueva Factura';
   factura: Factura = new Factura();
@@ -25,7 +25,6 @@ export class AgregarComponent implements OnInit {
   autocompleteControl = new FormControl();
   productos: string[] = ['Mesa', 'Tablet', 'Sony', 'Samsung'];
   productosFiltrados: Observable<Producto[]>;
-
   constructor(
     private clienteService: ClienteService,
     private facturaService: FacturaService,

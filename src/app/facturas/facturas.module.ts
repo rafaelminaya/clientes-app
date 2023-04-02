@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '../material/material.module';
 import { FacturasRoutingModule } from './facturas-routing.module';
-import { AgregarComponent } from './pages/agregar/agregar.component';
+import { FacturaAddComponent } from './pages/factura-add/factura-add.component';
 import { FacturaComponent } from './pages/factura/factura.component';
 
 @NgModule({
-  declarations: [FacturaComponent, AgregarComponent],
+  declarations: [FacturaComponent, FacturaAddComponent],
   imports: [CommonModule, FacturasRoutingModule, MaterialModule],
 })
 export class FacturasModule {}

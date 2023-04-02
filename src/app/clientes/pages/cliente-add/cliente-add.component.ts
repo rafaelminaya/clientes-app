@@ -7,11 +7,11 @@ import { Region } from '../../models/region';
 import { ClienteService } from '../../services/cliente.service';
 
 @Component({
-  selector: 'app-agregar',
-  templateUrl: './agregar.component.html',
+  selector: 'app-cliente-add',
+  templateUrl: './cliente-add.component.html',
   styles: [],
 })
-export class AgregarComponent implements OnInit {
+export class ClienteAddComponent implements OnInit {
   // PROPIEDADES
   titulo: string = 'Crear cliente';
   cliente: Cliente = new Cliente();
@@ -24,8 +24,6 @@ export class AgregarComponent implements OnInit {
   private router: Router : Inyectamos la dependencia del Router para poder hacer redirecciones.
   ActivatedRoute: Permtie obtener datos de la url, es decir observa el cambio en el parámetro.
   */
-
-  // CONSTRUCTOR
   constructor(
     private clienteService: ClienteService,
     private router: Router,
@@ -82,7 +80,6 @@ export class AgregarComponent implements OnInit {
         })
         */
 
-        //Redireccionamos a la ruta "http://localhost:4200/clientes"
         this.router.navigate(['/clientes']);
       },
       //Segundo parámetro que contiene los mensajes de error
@@ -113,7 +110,7 @@ export class AgregarComponent implements OnInit {
     this.clienteService.update(this.cliente).subscribe({
       next: (response) => {
         Swal.fire({
-          title: '"Error al registrar a la base de datos.',
+          title: 'Cliente actualizado.',
           text: `${response.mensaje} : ${response.cliente.nombre}`,
           icon: 'success',
           confirmButtonText: 'De acuerdo',

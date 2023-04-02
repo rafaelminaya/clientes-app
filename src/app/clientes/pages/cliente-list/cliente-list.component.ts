@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { tap } from 'rxjs';
-
 import Swal from 'sweetalert2';
 import { Cliente } from '../../models/cliente';
 import { ClienteService } from '../../services/cliente.service';
@@ -10,11 +9,11 @@ import { ModalService } from '../../services/modal.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
-  selector: 'app-listado',
-  templateUrl: './listado.component.html',
+  selector: 'app-cliente-list',
+  templateUrl: './cliente-list.component.html',
   styles: [],
 })
-export class ListadoComponent implements OnInit {
+export class ClienteListComponent implements OnInit {
   // PROPIEDADES
   clientes: Cliente[] = [];
   paginador: any;

@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RoleGuard } from '../auth/guards/role.guard';
-import { AgregarComponent } from './pages/agregar/agregar.component';
-import { ListadoComponent } from './pages/listado/listado.component';
+import { ClienteAddComponent } from './pages/cliente-add/cliente-add.component';
+import { ClienteListComponent } from './pages/cliente-list/cliente-list.component';
 
 const routes: Routes = [
   {
@@ -12,22 +12,22 @@ const routes: Routes = [
     children: [
       {
         path: '', // http://localhost:4200/clientes
-        component: ListadoComponent,
+        component: ClienteListComponent,
       },
       {
         path: 'page/:page', // http://localhost:4200/clientes/page/0
-        component: ListadoComponent,
+        component: ClienteListComponent,
       },
       {
         path: 'form', // http://localhost:4200/clientes/form
-        component: AgregarComponent,
+        component: ClienteAddComponent,
         canLoad: [AuthGuard, RoleGuard],
         canActivate: [AuthGuard, RoleGuard],
         data: { role: 'ROLE_ADMIN' }, // Parámetro enviado a los guards, pero que solo será usado por "RoleGuard"
       },
       {
         path: 'form/:id', // http://localhost:4200/clientes/form/1
-        component: AgregarComponent,
+        component: ClienteAddComponent,
         canLoad: [AuthGuard, RoleGuard],
         canActivate: [AuthGuard, RoleGuard],
         data: { role: 'ROLE_ADMIN' }, // Parámetro enviado a los guards, pero que solo será usado por "RoleGuard"

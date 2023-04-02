@@ -3,13 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '../material/material.module';
 import { ClientesRoutingModule } from './clientes-routing.module';
-import { AgregarComponent } from './pages/agregar/agregar.component';
-import { ListadoComponent } from './pages/listado/listado.component';
-import { PaginatorComponent } from './pages/paginator/paginator.component';
+import { ClienteAddComponent } from './pages/cliente-add/cliente-add.component';
+import { ClienteListComponent } from './pages/cliente-list/cliente-list.component';
 import { ClienteComponent } from './pages/cliente/cliente.component';
+import { PaginatorComponent } from './pages/paginator/paginator.component';
 
 @NgModule({
-  declarations: [AgregarComponent, ListadoComponent, PaginatorComponent, ClienteComponent],
+  declarations: [
+    PaginatorComponent,
+    ClienteComponent,
+    ClienteAddComponent,
+    ClienteListComponent,
+  ],
   imports: [CommonModule, ClientesRoutingModule, MaterialModule],
 })
 export class ClientesModule {}

@@ -42,8 +42,8 @@
                     <td *ngIf="service.hasRole('ROLE_USER')">
 
                         <!-- <pre>
-               {{cliente.foto | json  }}
-           </pre> -->
+                {{cliente.foto | json  }}
+            </pre> -->
                         <img class="img-thumbnail rounded" (click)="abrirModal(cliente)" *ngIf="cliente?.foto"
                             src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="foto del cliente"
                             style="width: 64px; cursor: pointer;">
@@ -74,14 +74,14 @@
         </table>
 
         <!-- Componente del paginador 
-         - *ngIf="paginador" : Condionamos que exista la variable "paginador" 
-           ya que tanto en este compente como en el componente hijo estas variables son asignadas en el "onInit",
-           por lo cual el hijo podría obtener la variable pero sin valor.
-         - [paginador] : Directiva que permite inyectar/pasar el "paginador" al componente hijo, es decir, 
-           del componente actual "ClientesComponent" al componente "PaginatorComponent".
-           Esta variable pertenece al nombre de la palabra del componente hijo "PaginatorComponent".
-         - "paginador" : Nombre de la variable del componente actual "ClientesComponent".
-     -->
+          - *ngIf="paginador" : Condionamos que exista la variable "paginador" 
+            ya que tanto en este compente como en el componente hijo estas variables son asignadas en el "onInit",
+            por lo cual el hijo podría obtener la variable pero sin valor.
+          - [paginador] : Directiva que permite inyectar/pasar el "paginador" al componente hijo, es decir, 
+            del componente actual "ClientesComponent" al componente "PaginatorComponent".
+            Esta variable pertenece al nombre de la palabra del componente hijo "PaginatorComponent".
+          - "paginador" : Nombre de la variable del componente actual "ClientesComponent".
+      -->
         <app-paginator *ngIf="paginador" [paginador]="paginador"></app-paginator>
 
     </div>
